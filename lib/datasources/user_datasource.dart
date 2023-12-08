@@ -39,4 +39,36 @@ class UserDataSource {
       );
     }
   }
+
+  static Future<Either<Failure, Map>> login(
+    String email,
+    String password,
+  ) async {
+    Uri url = Uri.parse('${AppConstants.baseUrl}/login');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: AppRequest.header(),
+        body: {
+          'email': email,
+          'password': password,
+        },
+      );
+
+      final data = AppResponse.data(response);
+
+      return Right(data);
+    } catch (e) {
+      if (e is Failure) {
+        return Left(e);
+      }
+
+      return Left(
+        FetchFailure(
+          e.toString(),
+        ),
+      );
+    }
+  }
 }

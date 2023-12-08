@@ -9,19 +9,22 @@ import 'package:laundry_app_flutter/config/app_assets.dart';
 import 'package:laundry_app_flutter/config/app_colors.dart';
 import 'package:laundry_app_flutter/config/app_constants.dart';
 import 'package:laundry_app_flutter/config/app_response.dart';
+import 'package:laundry_app_flutter/config/app_session.dart';
 import 'package:laundry_app_flutter/config/failure.dart';
+import 'package:laundry_app_flutter/config/nav.dart';
 import 'package:laundry_app_flutter/datasources/user_datasource.dart';
-import 'package:laundry_app_flutter/providers/auth/register_provider.dart';
+import 'package:laundry_app_flutter/pages/auth/register_page.dart';
+import 'package:laundry_app_flutter/pages/dashboard/dashboard_page.dart';
+import 'package:laundry_app_flutter/providers/auth/login_provider.dart';
 
-class RegisterPage extends ConsumerStatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  ConsumerState<RegisterPage> createState() => _RegisterPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends ConsumerState<RegisterPage> {
-  final editName = TextEditingController();
+class _LoginPageState extends ConsumerState<LoginPage> {
   final editEmail = TextEditingController();
   final editPassword = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -33,10 +36,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       return;
     }
 
-    setRegisterStatus(ref, 'Loading');
+    setLoginStatus(ref, 'Loading');
 
-    UserDataSource.register(
-      editName.text,
+    UserDataSource.login(
       editEmail.text,
       editPassword.text,
     ).then(
@@ -51,7 +53,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 DInfo.toastError(newStatus);
                 break;
               case UnauthorizedFailure:
-                newStatus = 'Unauthorized';
+                newStatus = 'Login failed';
                 DInfo.toastError(newStatus);
                 break;
               case ForbiddenFailure:
@@ -76,11 +78,14 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 newStatus = failure.message ?? '-';
                 break;
             }
-            setRegisterStatus(ref, newStatus);
+            setLoginStatus(ref, newStatus);
           },
           (result) {
-            DInfo.toastSuccess('Register success');
-            setRegisterStatus(ref, 'Register success');
+            AppSession.setUser(result['data']);
+            AppSession.setBearerToken(result['token']);
+            DInfo.toastSuccess('Login success');
+            setLoginStatus(ref, 'Success');
+            Nav.push(context, const DashboardPage());
           },
         );
       },
@@ -154,35 +159,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 color: Colors.white70,
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Icon(
-                                  Icons.person,
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ),
-                            DView.width(10),
-                            Expanded(
-                              child: DInput(
-                                controller: editName,
-                                fillColor: Colors.white70,
-                                hint: 'Name',
-                                radius: BorderRadius.circular(10),
-                                validator: (input) =>
-                                    input == '' ? "Required" : null,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      DView.height(16),
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            AspectRatio(
-                              aspectRatio: 1,
-                              child: Material(
-                                color: Colors.white70,
-                                borderRadius: BorderRadius.circular(10),
-                                child: const Icon(
                                   Icons.email,
                                   color: Colors.green,
                                 ),
@@ -239,13 +215,16 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               aspectRatio: 1,
                               child: DButtonFlat(
                                 onClick: () {
-                                  Navigator.pop(context);
+                                  Nav.push(
+                                    context,
+                                    const RegisterPage(),
+                                  );
                                 },
                                 padding: const EdgeInsets.all(0),
                                 radius: 10,
                                 mainColor: Colors.white70,
                                 child: const Text(
-                                  'LOG',
+                                  'REG',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold),
@@ -260,7 +239,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 __,
                               ) {
                                 String status =
-                                    wiRef.watch(registerStatusProvider);
+                                    wiRef.watch(loginStatusProvider);
 
                                 if (status == 'Loading') {
                                   return DView.loadingCircle();
@@ -271,7 +250,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                   style: const ButtonStyle(
                                     alignment: Alignment.centerLeft,
                                   ),
-                                  child: const Text('Register'),
+                                  child: const Text('Login'),
                                 );
                               }),
                             ),
