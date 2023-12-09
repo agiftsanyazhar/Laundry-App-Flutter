@@ -41,55 +41,50 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     UserDataSource.login(
       editEmail.text,
       editPassword.text,
-    ).then(
-      (value) {
-        String newStatus = '';
+    ).then((value) {
+      String newStatus = '';
 
-        value.fold(
-          (failure) {
-            switch (failure.runtimeType) {
-              case BadRequestFailure:
-                newStatus = 'Bad request';
-                DInfo.toastError(newStatus);
-                break;
-              case UnauthorizedFailure:
-                newStatus = 'Login failed';
-                DInfo.toastError(newStatus);
-                break;
-              case ForbiddenFailure:
-                newStatus = "You don't have permission";
-                DInfo.toastError(newStatus);
-                break;
-              case NotFoundFailure:
-                newStatus = "Error not found";
-                DInfo.toastError(newStatus);
-                break;
-              case InvalidInputFailure:
-                newStatus = "Invalid input";
-                AppResponse.invalidInput(context, failure.message ?? '{}');
-                break;
-              case ServerFailure:
-                newStatus = "Server error";
-                DInfo.toastError(newStatus);
-                break;
-              default:
-                newStatus = 'Request error';
-                DInfo.toastError(newStatus);
-                newStatus = failure.message ?? '-';
-                break;
-            }
-            setLoginStatus(ref, newStatus);
-          },
-          (result) {
-            AppSession.setUser(result['data']);
-            AppSession.setBearerToken(result['token']);
-            DInfo.toastSuccess('Login success');
-            setLoginStatus(ref, 'Success');
-            Nav.push(context, const DashboardPage());
-          },
-        );
-      },
-    );
+      value.fold((failure) {
+        switch (failure.runtimeType) {
+          case BadRequestFailure:
+            newStatus = 'Bad request';
+            DInfo.toastError(newStatus);
+            break;
+          case UnauthorizedFailure:
+            newStatus = 'Login failed';
+            DInfo.toastError(newStatus);
+            break;
+          case ForbiddenFailure:
+            newStatus = "You don't have permission";
+            DInfo.toastError(newStatus);
+            break;
+          case NotFoundFailure:
+            newStatus = "Error not found";
+            DInfo.toastError(newStatus);
+            break;
+          case InvalidInputFailure:
+            newStatus = "Invalid input";
+            AppResponse.invalidInput(context, failure.message ?? '{}');
+            break;
+          case ServerFailure:
+            newStatus = "Server error";
+            DInfo.toastError(newStatus);
+            break;
+          default:
+            newStatus = 'Request error';
+            DInfo.toastError(newStatus);
+            newStatus = failure.message ?? '-';
+            break;
+        }
+        setLoginStatus(ref, newStatus);
+      }, (result) {
+        AppSession.setUser(result['data']);
+        AppSession.setBearerToken(result['token']);
+        DInfo.toastSuccess('Login success');
+        setLoginStatus(ref, 'Success');
+        Nav.push(context, const DashboardPage());
+      });
+    });
   }
 
   @override

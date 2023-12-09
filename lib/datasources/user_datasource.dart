@@ -32,11 +32,7 @@ class UserDataSource {
         return Left(e);
       }
 
-      return Left(
-        FetchFailure(
-          e.toString(),
-        ),
-      );
+      return Left(FetchFailure(e.toString()));
     }
   }
 
@@ -64,11 +60,7 @@ class UserDataSource {
         return Left(e);
       }
 
-      return Left(
-        FetchFailure(
-          e.toString(),
-        ),
-      );
+      return Left(FetchFailure(e.toString()));
     }
   }
 }

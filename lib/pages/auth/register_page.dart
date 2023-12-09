@@ -39,52 +39,47 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       editName.text,
       editEmail.text,
       editPassword.text,
-    ).then(
-      (value) {
-        String newStatus = '';
+    ).then((value) {
+      String newStatus = '';
 
-        value.fold(
-          (failure) {
-            switch (failure.runtimeType) {
-              case BadRequestFailure:
-                newStatus = 'Bad request';
-                DInfo.toastError(newStatus);
-                break;
-              case UnauthorizedFailure:
-                newStatus = 'Unauthorized';
-                DInfo.toastError(newStatus);
-                break;
-              case ForbiddenFailure:
-                newStatus = "You don't have permission";
-                DInfo.toastError(newStatus);
-                break;
-              case NotFoundFailure:
-                newStatus = "Error not found";
-                DInfo.toastError(newStatus);
-                break;
-              case InvalidInputFailure:
-                newStatus = "Invalid input";
-                AppResponse.invalidInput(context, failure.message ?? '{}');
-                break;
-              case ServerFailure:
-                newStatus = "Server error";
-                DInfo.toastError(newStatus);
-                break;
-              default:
-                newStatus = 'Request error';
-                DInfo.toastError(newStatus);
-                newStatus = failure.message ?? '-';
-                break;
-            }
-            setRegisterStatus(ref, newStatus);
-          },
-          (result) {
-            DInfo.toastSuccess('Register success');
-            setRegisterStatus(ref, 'Register success');
-          },
-        );
-      },
-    );
+      value.fold((failure) {
+        switch (failure.runtimeType) {
+          case BadRequestFailure:
+            newStatus = 'Bad request';
+            DInfo.toastError(newStatus);
+            break;
+          case UnauthorizedFailure:
+            newStatus = 'Unauthorized';
+            DInfo.toastError(newStatus);
+            break;
+          case ForbiddenFailure:
+            newStatus = "You don't have permission";
+            DInfo.toastError(newStatus);
+            break;
+          case NotFoundFailure:
+            newStatus = "Error not found";
+            DInfo.toastError(newStatus);
+            break;
+          case InvalidInputFailure:
+            newStatus = "Invalid input";
+            AppResponse.invalidInput(context, failure.message ?? '{}');
+            break;
+          case ServerFailure:
+            newStatus = "Server error";
+            DInfo.toastError(newStatus);
+            break;
+          default:
+            newStatus = 'Request error';
+            DInfo.toastError(newStatus);
+            newStatus = failure.message ?? '-';
+            break;
+        }
+        setRegisterStatus(ref, newStatus);
+      }, (result) {
+        DInfo.toastSuccess('Register success');
+        setRegisterStatus(ref, 'Register success');
+      });
+    });
   }
 
   @override
