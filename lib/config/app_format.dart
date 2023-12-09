@@ -24,9 +24,7 @@ class AppFormat {
   static String fullDate(source) {
     switch (source.runtimeType) {
       case String:
-        return DateFormat('EEEE, dd MMMM yyyy').format(
-          DateTime.parse(source),
-        );
+        return DateFormat('EEEE, dd MMMM yyyy').format(DateTime.parse(source));
       case DateTime:
         return DateFormat('EEEE, dd MMMM yyyy').format(source);
       default:

@@ -11,7 +11,7 @@ import 'package:laundry_app_flutter/config/app_constants.dart';
 import 'package:laundry_app_flutter/config/app_response.dart';
 import 'package:laundry_app_flutter/config/failure.dart';
 import 'package:laundry_app_flutter/datasources/user_datasource.dart';
-import 'package:laundry_app_flutter/providers/auth/register_provider.dart';
+import 'package:laundry_app_flutter/providers/register_provider.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
@@ -254,26 +254,28 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                             ),
                             DView.width(10),
                             Expanded(
-                              child: Consumer(builder: (
-                                _,
-                                wiRef,
-                                __,
-                              ) {
-                                String status =
-                                    wiRef.watch(registerStatusProvider);
+                              child: Consumer(
+                                builder: (
+                                  _,
+                                  wiRef,
+                                  __,
+                                ) {
+                                  String status =
+                                      wiRef.watch(registerStatusProvider);
 
-                                if (status == 'Loading') {
-                                  return DView.loadingCircle();
-                                }
+                                  if (status == 'Loading') {
+                                    return DView.loadingCircle();
+                                  }
 
-                                return ElevatedButton(
-                                  onPressed: () => execute(),
-                                  style: const ButtonStyle(
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  child: const Text('Register'),
-                                );
-                              }),
+                                  return ElevatedButton(
+                                    onPressed: () => execute(),
+                                    style: const ButtonStyle(
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    child: const Text('Register'),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),

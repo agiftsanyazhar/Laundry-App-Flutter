@@ -15,7 +15,7 @@ import 'package:laundry_app_flutter/config/nav.dart';
 import 'package:laundry_app_flutter/datasources/user_datasource.dart';
 import 'package:laundry_app_flutter/pages/auth/register_page.dart';
 import 'package:laundry_app_flutter/pages/dashboard/dashboard_page.dart';
-import 'package:laundry_app_flutter/providers/auth/login_provider.dart';
+import 'package:laundry_app_flutter/providers/login_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -233,26 +233,28 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ),
                             DView.width(10),
                             Expanded(
-                              child: Consumer(builder: (
-                                _,
-                                wiRef,
-                                __,
-                              ) {
-                                String status =
-                                    wiRef.watch(loginStatusProvider);
+                              child: Consumer(
+                                builder: (
+                                  _,
+                                  wiRef,
+                                  __,
+                                ) {
+                                  String status =
+                                      wiRef.watch(loginStatusProvider);
 
-                                if (status == 'Loading') {
-                                  return DView.loadingCircle();
-                                }
+                                  if (status == 'Loading') {
+                                    return DView.loadingCircle();
+                                  }
 
-                                return ElevatedButton(
-                                  onPressed: () => execute(),
-                                  style: const ButtonStyle(
-                                    alignment: Alignment.centerLeft,
-                                  ),
-                                  child: const Text('Login'),
-                                );
-                              }),
+                                  return ElevatedButton(
+                                    onPressed: () => execute(),
+                                    style: const ButtonStyle(
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    child: const Text('Login'),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
