@@ -11,11 +11,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer(
-        builder: (
-          _,
-          wiRef,
-          __,
-        ) {
+        builder: (_, wiRef, __) {
           int navIndex = wiRef.watch(dashboardNavIndexProvider);
 
           return AppConstants.navMenuDashboard[navIndex]['view'] as Widget;
@@ -24,11 +20,7 @@ class DashboardPage extends StatelessWidget {
       extendBody: true,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(70, 0, 70, 20),
-        child: Consumer(builder: (
-          _,
-          wiRef,
-          __,
-        ) {
+        child: Consumer(builder: (_, wiRef, __) {
           int navIndex = wiRef.watch(dashboardNavIndexProvider);
           return Material(
             borderRadius: BorderRadius.circular(10),

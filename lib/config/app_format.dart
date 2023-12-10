@@ -4,7 +4,7 @@ class AppFormat {
   static String shortPrice(num number) {
     return NumberFormat.compactCurrency(
       locale: 'id_ID',
-      symbol: 'Rp',
+      symbol: 'Rp ',
       decimalDigits: 0,
     ).format(number);
   }
@@ -12,7 +12,7 @@ class AppFormat {
   static String longPrice(num number) {
     return NumberFormat.currency(
       locale: 'id_ID',
-      symbol: 'Rp',
+      symbol: 'Rp ',
       decimalDigits: 0,
     ).format(number);
   }

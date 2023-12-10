@@ -6,7 +6,7 @@ import 'package:laundry_app_flutter/pages/dashboard/dashboard_views/home_view.da
 class AppConstants {
   static const appName = "Laundry App";
 
-  static const _host = "http://192.168.0.129/laundry-app/public";
+  static const _host = "http://192.168.18.7/laundry-app/public";
   // static const _host = "https://laundry-app.agiftsany-azhar.web.id";
 
   static const baseUrl = "$_host/api";
@@ -41,5 +41,13 @@ class AppConstants {
       'icon': Icons.account_circle,
       'label': 'Account',
     }
+  ];
+
+  static const homeCategories = [
+    'All',
+    'Economical',
+    'Exclusive',
+    'Express',
+    'Regular',
   ];
 }

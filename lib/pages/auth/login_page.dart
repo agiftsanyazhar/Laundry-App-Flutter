@@ -229,11 +229,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             DView.width(10),
                             Expanded(
                               child: Consumer(
-                                builder: (
-                                  _,
-                                  wiRef,
-                                  __,
-                                ) {
+                                builder: (_, wiRef, __) {
                                   String status =
                                       wiRef.watch(loginStatusProvider);
 
