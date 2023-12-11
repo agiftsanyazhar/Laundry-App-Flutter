@@ -14,6 +14,7 @@ import 'package:laundry_app_flutter/datasources/shop_datasource.dart';
 import 'package:laundry_app_flutter/models/promo_model.dart';
 import 'package:laundry_app_flutter/models/shop_model.dart';
 import 'package:laundry_app_flutter/providers/home_provider.dart';
+import 'package:laundry_app_flutter/widgets/error_background.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -99,25 +100,32 @@ class _HomeViewState extends ConsumerState<HomeView> {
     });
   }
 
-  @override
-  void initState() {
+  refreshIndicator() {
     getPromo();
     getRecommendationLimit();
+  }
+
+  @override
+  void initState() {
+    refreshIndicator();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        header(),
-        categories(),
-        DView.height(20),
-        promo(),
-        DView.height(20),
-        recommendation(),
-        DView.height(20),
-      ],
+    return RefreshIndicator(
+      onRefresh: () async => refreshIndicator(),
+      child: ListView(
+        children: [
+          header(),
+          categories(),
+          DView.height(20),
+          promo(),
+          DView.height(20),
+          recommendation(),
+          DView.height(20),
+        ],
+      ),
     );
   }
 
@@ -294,7 +302,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
               ),
             ),
             list.isEmpty
-                ? DView.empty('No Promo')
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: ErrorBackground(
+                      ratio: 16 / 9,
+                      message: 'No Promo',
+                    ),
+                  )
                 : AspectRatio(
                     aspectRatio: 16 / 9,
                     child: PageView.builder(
@@ -413,7 +427,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
               ),
             ),
             list.isEmpty
-                ? DView.empty('No Recommendation')
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: ErrorBackground(
+                      ratio: 1.2,
+                      message: 'No Recommendation',
+                    ),
+                  )
                 : SizedBox(
                     height: 250,
                     child: ListView.builder(
