@@ -9,10 +9,13 @@ import 'package:laundry_app_flutter/config/app_colors.dart';
 import 'package:laundry_app_flutter/config/app_constants.dart';
 import 'package:laundry_app_flutter/config/app_format.dart';
 import 'package:laundry_app_flutter/config/failure.dart';
+import 'package:laundry_app_flutter/config/nav.dart';
 import 'package:laundry_app_flutter/datasources/promo_datasource.dart';
 import 'package:laundry_app_flutter/datasources/shop_datasource.dart';
 import 'package:laundry_app_flutter/models/promo_model.dart';
 import 'package:laundry_app_flutter/models/shop_model.dart';
+import 'package:laundry_app_flutter/pages/dashboard/detail_shop_page.dart';
+import 'package:laundry_app_flutter/pages/dashboard/search_by_city_page.dart';
 import 'package:laundry_app_flutter/providers/home_provider.dart';
 import 'package:laundry_app_flutter/widgets/error_background.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -27,7 +30,9 @@ class HomeView extends ConsumerStatefulWidget {
 class _HomeViewState extends ConsumerState<HomeView> {
   static final editSearch = TextEditingController();
 
-  goToSearchCity() {}
+  goToSearchCity() {
+    Nav.push(context, SearchByCityPage(query: editSearch.text));
+  }
 
   getPromo() {
     PromoDataSource.readLimit().then((value) {
@@ -443,7 +448,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                         ShopModel item = list[index];
 
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Nav.push(context, DetailShopPage(shop: item));
+                          },
                           child: Container(
                             margin: EdgeInsets.fromLTRB(
                               index == 0 ? 30 : 10,
