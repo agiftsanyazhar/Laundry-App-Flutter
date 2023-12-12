@@ -116,7 +116,7 @@ class AccountView extends StatelessWidget {
             ),
             DView.height(10),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 30),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
               onTap: () {},
               dense: true,
               horizontalTitleGap: 0,
@@ -127,7 +127,7 @@ class AccountView extends StatelessWidget {
               trailing: const Icon(Icons.navigate_next),
             ),
             ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 30),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
               onTap: () {},
               dense: true,
               horizontalTitleGap: 0,
@@ -156,91 +156,108 @@ class AccountView extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-              onTap: () {},
-              dense: true,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.dark_mode),
-              title: const Text(
-                'Dark Mode',
-              ),
-              trailing: Switch(
-                activeColor: AppColors.primary,
-                value: false,
-                onChanged: (value) {},
-              ),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-              onTap: () {},
-              dense: true,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.language),
-              title: const Text(
-                'Language',
-              ),
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-              onTap: () {},
-              dense: true,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.notifications),
-              title: const Text(
-                'Notification',
-              ),
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-              onTap: () {},
-              dense: true,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.feedback),
-              title: const Text(
-                'Feedback',
-              ),
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-              onTap: () {},
-              dense: true,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.support_agent),
-              title: const Text(
-                'Support',
-              ),
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-              onTap: () {
-                showAboutDialog(
-                  context: context,
-                  applicationIcon: const Icon(
-                    Icons.local_laundry_service,
-                    size: 50,
-                    color: AppColors.primary,
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 80),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        onTap: () {},
+                        dense: true,
+                        horizontalTitleGap: 0,
+                        leading: const Icon(Icons.dark_mode),
+                        title: const Text(
+                          'Dark Mode',
+                        ),
+                        trailing: Switch(
+                          activeColor: AppColors.primary,
+                          value: false,
+                          onChanged: (value) {},
+                        ),
+                      ),
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        onTap: () {},
+                        dense: true,
+                        horizontalTitleGap: 0,
+                        leading: const Icon(Icons.language),
+                        title: const Text(
+                          'Language',
+                        ),
+                        trailing: const Icon(Icons.navigate_next),
+                      ),
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        onTap: () {},
+                        dense: true,
+                        horizontalTitleGap: 0,
+                        leading: const Icon(Icons.notifications),
+                        title: const Text(
+                          'Notification',
+                        ),
+                        trailing: const Icon(Icons.navigate_next),
+                      ),
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        onTap: () {},
+                        dense: true,
+                        horizontalTitleGap: 0,
+                        leading: const Icon(Icons.feedback),
+                        title: const Text(
+                          'Feedback',
+                        ),
+                        trailing: const Icon(Icons.navigate_next),
+                      ),
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        onTap: () {},
+                        dense: true,
+                        horizontalTitleGap: 0,
+                        leading: const Icon(Icons.support_agent),
+                        title: const Text(
+                          'Support',
+                        ),
+                        trailing: const Icon(Icons.navigate_next),
+                      ),
+                      ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 30),
+                        onTap: () {
+                          showAboutDialog(
+                            context: context,
+                            applicationIcon: const Icon(
+                              Icons.local_laundry_service,
+                              size: 50,
+                              color: AppColors.primary,
+                            ),
+                            applicationName: 'Laundry App',
+                            applicationVersion: 'v1.0.0',
+                            children: [
+                              const Text(
+                                'Laundry Market App to monitor your laundrt=y status.',
+                              )
+                            ],
+                          );
+                        },
+                        dense: true,
+                        horizontalTitleGap: 0,
+                        leading: const Icon(Icons.info),
+                        title: const Text(
+                          'About',
+                        ),
+                        trailing: const Icon(Icons.navigate_next),
+                      ),
+                    ],
                   ),
-                  applicationName: 'Laundry App',
-                  applicationVersion: 'v1.0.0',
-                  children: [
-                    const Text(
-                      'Laundry Market App to monitor your laundrt=y status.',
-                    )
-                  ],
-                );
-              },
-              dense: true,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.info),
-              title: const Text(
-                'About',
-              ),
-              trailing: const Icon(Icons.navigate_next),
+                ),
+              ],
             ),
           ],
         );
