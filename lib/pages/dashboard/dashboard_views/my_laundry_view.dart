@@ -9,9 +9,11 @@ import 'package:laundry_app_flutter/config/app_constants.dart';
 import 'package:laundry_app_flutter/config/app_format.dart';
 import 'package:laundry_app_flutter/config/app_session.dart';
 import 'package:laundry_app_flutter/config/failure.dart';
+import 'package:laundry_app_flutter/config/nav.dart';
 import 'package:laundry_app_flutter/datasources/laundry_datasource.dart';
 import 'package:laundry_app_flutter/models/laundry_model.dart';
 import 'package:laundry_app_flutter/models/user_model.dart';
+import 'package:laundry_app_flutter/pages/dashboard/detail_laundry_page.dart';
 import 'package:laundry_app_flutter/providers/my_laundry_provider.dart';
 import 'package:laundry_app_flutter/widgets/error_background.dart';
 
@@ -202,11 +204,22 @@ class _MyLaundryviewState extends ConsumerState<MyLaundryview> {
                 }
 
                 if (list.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 80),
-                    child: ErrorBackground(
-                      ratio: 16 / 9,
-                      message: 'Empty',
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 30, 30, 80),
+                    child: Stack(
+                      children: [
+                        const ErrorBackground(
+                          ratio: 16 / 9,
+                          message: 'Empty',
+                        ),
+                        IconButton(
+                          onPressed: () => getMylaundry(),
+                          icon: const Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }
@@ -240,92 +253,97 @@ class _MyLaundryviewState extends ConsumerState<MyLaundryview> {
                     ),
                   ),
                   itemBuilder: (context, laundry) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.green[50],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  laundry.shop.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                    return GestureDetector(
+                      onTap: () {
+                        Nav.push(context, DetailLaundryPage(laundry: laundry));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.green[50],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    laundry.shop.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                DView.width(),
+                                Text(
+                                  AppFormat.longPrice(laundry.total),
+                                  textAlign: TextAlign.end,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 18,
                                   ),
                                 ),
-                              ),
-                              DView.width(),
-                              Text(
-                                AppFormat.longPrice(laundry.total),
-                                textAlign: TextAlign.end,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                          DView.height(12),
-                          Row(
-                            children: [
-                              if (laundry.withDelivery)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(4),
+                              ],
+                            ),
+                            DView.height(12),
+                            Row(
+                              children: [
+                                if (laundry.withDelivery)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    margin: const EdgeInsets.only(right: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    child: const Text(
+                                      'Delivery',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        height: 1,
+                                      ),
+                                    ),
                                   ),
-                                  margin: const EdgeInsets.only(right: 8),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
+                                if (laundry.withPickup)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    margin: const EdgeInsets.only(right: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    child: const Text(
+                                      'Delivery',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        height: 1,
+                                      ),
+                                    ),
                                   ),
-                                  child: const Text(
-                                    'Delivery',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      height: 1,
+                                Expanded(
+                                  child: Text(
+                                    '${laundry.weight} kg',
+                                    textAlign: TextAlign.end,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                 ),
-                              if (laundry.withPickup)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  margin: const EdgeInsets.only(right: 8),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
-                                  ),
-                                  child: const Text(
-                                    'Delivery',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      height: 1,
-                                    ),
-                                  ),
-                                ),
-                              Expanded(
-                                child: Text(
-                                  '${laundry.weight} kg',
-                                  textAlign: TextAlign.end,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
