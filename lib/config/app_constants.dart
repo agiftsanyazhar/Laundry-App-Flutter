@@ -6,8 +6,8 @@ import 'package:laundry_app_flutter/pages/dashboard/dashboard_views/my_laundry_v
 class AppConstants {
   static const appName = "Laundry App";
 
-  static const _host = "http://192.168.18.7/laundry-app/public";
-  // static const _host = "https://laundry-app.agiftsany-azhar.web.id";
+  // static const _host = "http://192.168.18.7/laundry-app/public";
+  static const _host = "https://laundry-app.agiftsany-azhar.web.id";
 
   static const baseUrl = "$_host/api";
 
